@@ -15,7 +15,7 @@ app.post("/events", async (req, res) => {
     setTimeout( async () => {
         if (type==="CommentCreated") {
         const status = (content.includes('wtf')) ? "rejected" : "approved"
-        await axios.post("http://localhost:4005/events", {
+        await axios.post("http://events-clusterip-srv:4005/events", {
             type: "CommentModerated",
             data: {
                 id, content, postId, status
@@ -32,6 +32,6 @@ app.post("/events", async (req, res) => {
 
 app.listen(port, async () => {
     console.log(`Moderator service is listening at ${port}`)
-    const resp = await axios.get('http://localhost:4005/events').catch(err => console.log(`text ${err}`))
+    const resp = await axios.get('http://events-clusterip-srv:4005/events').catch(err => console.log(`text ${err}`))
     console.log(`<data:></data:> ${resp.data}`)
 })
